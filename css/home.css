@@ -389,6 +389,30 @@ input {
 	transition: 0.4s;
 }
 
+#hitme:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.field-error {
+	border-color: #e74c3c !important;
+	background-color: #fff5f4;
+}
+
+.form-error {
+	color: #e74c3c;
+	font-size: 0.9rem;
+	margin: 8px 15% 0;
+	text-align: center;
+	opacity: 0;
+	transition: opacity 0.25s ease;
+	min-height: 1.2em;
+}
+
+.form-error.show {
+	opacity: 1;
+}
+
 #hitme:hover {
 	cursor: pointer;
 	transform: translate(10px, 10px);

@@ -148,9 +148,40 @@ window.onload = function () {
 				} else {
 					let data = {
 						message: document.getElementById("message-text").value,
-						user: document.getElementById("user-name").value,
+						user: document.getElementById("user-name").value.trim(),
 					};
-					if (data.message == "" || data.user == "") {
+
+					const emailField = document.getElementById("user-name");
+					const messageField = document.getElementById("message-text");
+					const errorEl = document.getElementById("form-error");
+					const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+					// Clear previous errors
+					emailField.classList.remove("field-error");
+					messageField.classList.remove("field-error");
+					errorEl.classList.remove("show");
+
+					// Validate
+					if (data.message === "") {
+						messageField.classList.add("field-error");
+						errorEl.textContent = "My pigeon needs a message to carry.";
+						errorEl.classList.add("show");
+						messageField.focus();
+						return;
+					}
+					if (data.user === "") {
+						emailField.classList.add("field-error");
+						errorEl.textContent =
+							"My pigeon needs your email to write back.";
+						errorEl.classList.add("show");
+						emailField.focus();
+						return;
+					}
+					if (!emailRegex.test(data.user)) {
+						emailField.classList.add("field-error");
+						errorEl.textContent = "That doesn’t look like a valid email.";
+						errorEl.classList.add("show");
+						emailField.focus();
 						return;
 					}
 

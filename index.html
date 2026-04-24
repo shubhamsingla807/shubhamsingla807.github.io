@@ -188,7 +188,7 @@
 								id="message-text"
 								class="opac0"
 								disabled
-								placeholder="I’m just a message away. Reach out to me in case you want any help or you have some feedback for my portfolio. I’ll respond to you as soon as possible."
+								placeholder="Got a project, opportunity, or question? Drop a message."
 							></textarea>
 							<input
 								type="email"
@@ -196,8 +196,10 @@
 								id="user-name"
 								class="opac0"
 								disabled
-								placeholder="My Pigeon can reach you at (Your mail)"
+								required
+								placeholder="Where should my pigeon fly back? (your email) *"
 							/>
+							<p id="form-error" class="form-error opac0"></p>
 							<button type="button" class="hitme" id="hitme">
 								HIT ME UP!
 							</button>
@@ -206,8 +208,7 @@
 					<div class="final-greet">
 						<img src="./images/gulel.png" alt="" />
 						<p>
-							Thanks for being here, my pigeon will find you if
-							you’ve shared your mail id :D
+							Thanks for being here, my pigeon will find you.
 						</p>
 					</div>
 				</div>
