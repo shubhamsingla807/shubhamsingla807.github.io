@@ -154,34 +154,34 @@ window.onload = function () {
 					const emailField = document.getElementById("user-name");
 					const messageField = document.getElementById("message-text");
 					const errorEl = document.getElementById("form-error");
+					const formEl = document.getElementById("contact-form");
 					const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 					// Clear previous errors
 					emailField.classList.remove("field-error");
 					messageField.classList.remove("field-error");
 					errorEl.classList.remove("show");
+					formEl.classList.remove("has-error");
+
+					function showError(text, fieldEl) {
+						fieldEl.classList.add("field-error");
+						errorEl.textContent = text;
+						errorEl.classList.add("show");
+						formEl.classList.add("has-error");
+						fieldEl.focus();
+					}
 
 					// Validate
 					if (data.message === "") {
-						messageField.classList.add("field-error");
-						errorEl.textContent = "My pigeon needs a message to carry.";
-						errorEl.classList.add("show");
-						messageField.focus();
+						showError("Pigeon needs a message to carry.", messageField);
 						return;
 					}
 					if (data.user === "") {
-						emailField.classList.add("field-error");
-						errorEl.textContent =
-							"My pigeon needs your email to write back.";
-						errorEl.classList.add("show");
-						emailField.focus();
+						showError("Pigeon needs your email to fly back.", emailField);
 						return;
 					}
 					if (!emailRegex.test(data.user)) {
-						emailField.classList.add("field-error");
-						errorEl.textContent = "That doesn’t look like a valid email.";
-						errorEl.classList.add("show");
-						emailField.focus();
+						showError("That doesn’t look like a valid email.", emailField);
 						return;
 					}
 
