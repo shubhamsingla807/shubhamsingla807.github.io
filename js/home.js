@@ -153,25 +153,56 @@ window.onload = function () {
 					if (data.message == "" || data.user == "") {
 						return;
 					}
-					window.open(
-						`mailto:shubhamsingla807@gmail.com?subject=Hey Shubham!!!&body=From : ${data.user} %0D%0AMessage : ${data.message}`,
-						"_blank",
-					);
 
-					let tl1 = new TimelineMax();
+					// Disable button while sending
+					btn.disabled = true;
+					btn.innerText = "Sending...";
 
-					tl1.to("#greeting", 0.4, { opacity: 0 });
-					tl1.to("#message-text", 0.4, { opacity: 0 }, "-=.4");
-					tl1.to("#user-name", 0.4, { opacity: 0 }, "-=.8");
-					tl1.to("#hitme", 0.4, { opacity: 0 }, "-=1.2");
+					// Send via Formsubmit AJAX
+					fetch(
+						"https://formsubmit.co/ajax/shubhamsingla807@gmail.com",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+								Accept: "application/json",
+							},
+							body: JSON.stringify({
+								email: data.user,
+								message: data.message,
+								_subject: "Hey Shubham! New message from portfolio",
+								_template: "table",
+								_captcha: "false",
+							}),
+						},
+					)
+						.then((response) => response.json())
+						.then((result) => {
+							// Success flow
+							showSuccess();
+						})
+						.catch((error) => {
+							// Fallback to mailto if Formsubmit fails
+							window.location.href = `mailto:shubhamsingla807@gmail.com?subject=Hey Shubham!!!&body=From : ${data.user} %0D%0AMessage : ${data.message}`;
+							showSuccess();
+						});
 
-					document.getElementById("user-name").disabled = true;
-					document.getElementById("message-text").disabled = true;
-					document.getElementById("hitme").disabled = true;
-					document.getElementById("hitme").style.display = "none";
+					function showSuccess() {
+						let tl1 = new TimelineMax();
 
-					tl1.to(".final-greet", 0.4, { display: "block" }, 1.2);
-					tl1.to(".final-greet", 0.4, { opacity: 1 }, 1.2);
+						tl1.to("#greeting", 0.4, { opacity: 0 });
+						tl1.to("#message-text", 0.4, { opacity: 0 }, "-=.4");
+						tl1.to("#user-name", 0.4, { opacity: 0 }, "-=.8");
+						tl1.to("#hitme", 0.4, { opacity: 0 }, "-=1.2");
+
+						document.getElementById("user-name").disabled = true;
+						document.getElementById("message-text").disabled = true;
+						document.getElementById("hitme").disabled = true;
+						document.getElementById("hitme").style.display = "none";
+
+						tl1.to(".final-greet", 0.4, { display: "block" }, 1.2);
+						tl1.to(".final-greet", 0.4, { opacity: 1 }, 1.2);
+					}
 				}
 			});
 		}
