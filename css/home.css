@@ -491,6 +491,25 @@ input {
 	border: 1px solid #d8d8d8;
 }
 
+/* Work in progress card — greyed and non-clickable */
+.section2.wip {
+	opacity: 0.55;
+	pointer-events: none;
+}
+
+.section2.wip h1 a {
+	cursor: default;
+	color: #666;
+}
+
+.section2.wip:hover .article-type {
+	color: inherit;
+}
+
+.section2.wip .article-type {
+	color: #b08900;
+}
+
 .overlay {
 	z-index: 20;
 	width: 100%;

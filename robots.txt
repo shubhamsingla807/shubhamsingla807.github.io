@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /locked.html
+Disallow: /locked_powerplay.html
+Disallow: /locked_justdial.html
+Disallow: /smarty.html
+
+Sitemap: https://shubhamsingla807.github.io/sitemap.xml
