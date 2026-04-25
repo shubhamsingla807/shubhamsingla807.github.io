@@ -264,9 +264,14 @@ header {
 }
 
 .bottom-gret {
-	margin-top: 80px;
-	margin-bottom: 40px;
+	margin: 80px auto 40px;
 	font-size: 1.1rem;
+	text-align: center;
+	white-space: nowrap;
+	line-height: 1.6;
+}
+.collage-section .bottom-gret {
+	margin: 80px auto 40px;
 }
 
 /* ------------ footer -------------- */
@@ -419,5 +424,357 @@ footer ul li:nth-child(3) a:before {
 	.rotate-right-container a {
 		padding: 0 3px;
 		font-size: 1rem;
+	}
+}
+
+/* ==========================================
+   Collage section (recommendations)
+   ========================================== */
+/* ---- Ladi (sinusoidal string lights) ---- */
+.ladi-svg {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	left: 0;
+	width: 2700px;
+	height: 200px;
+	z-index: 0;
+	pointer-events: none;
+}
+
+.ladi-wire {
+	stroke: #d1d5db;
+	stroke-width: 1.4;
+	fill: none;
+}
+
+.ladi-bulb {
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}
+
+.collage-section:hover .ladi-bulb {
+	opacity: 1;
+	animation: ladi-twinkle 2s ease-in-out infinite alternate;
+}
+
+@keyframes ladi-twinkle {
+	from { opacity: 0.5; }
+	to   { opacity: 1;   }
+}
+
+.collage-section {
+	padding: 80px 0 40px;
+	width: 100%;
+	overflow: hidden;
+}
+
+.collage-section h2 {
+	text-align: center;
+	font-size: 2.4rem;
+	font-weight: 400;
+	margin-bottom: 8px;
+}
+
+.collage-subtitle {
+	text-align: center;
+	color: #94a3b8;
+	font-size: 0.95rem;
+	margin-bottom: 40px;
+	font-weight: 400;
+}
+
+.collage-scroll {
+	display: flex;
+	gap: 36px;
+	overflow-x: auto;
+	overflow-y: visible;
+	padding: 30px 8vw 60px;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scrollbar-color: #cbd5e1 transparent;
+	position: relative;
+}
+
+.collage-scroll::-webkit-scrollbar { height: 6px; }
+.collage-scroll::-webkit-scrollbar-track { background: transparent; }
+.collage-scroll::-webkit-scrollbar-thumb {
+	background: #cbd5e1;
+	border-radius: 3px;
+}
+
+.reco-card {
+	flex: 0 0 auto;
+	width: 360px;
+	background: white;
+	border-radius: 12px;
+	padding: 0;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+	cursor: default;
+	scroll-snap-align: start;
+	position: relative;
+	transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+		box-shadow 0.35s ease;
+	overflow: visible;
+	font-family: "Poppins", sans-serif;
+	z-index: 1;
+}
+
+/* Washi tape on each card */
+.reco-card::before {
+	content: '';
+	position: absolute;
+	top: -9px;
+	left: 50%;
+	transform: translateX(-50%) rotate(-4deg);
+	width: 64px;
+	height: 17px;
+	background: rgba(255, 241, 138, 0.62);
+	border: 0.5px solid rgba(180, 155, 50, 0.2);
+	z-index: 20;
+	pointer-events: none;
+	border-radius: 1px;
+}
+.reco-card:nth-child(2n)::before {
+	left: 65%;
+	transform: translateX(-50%) rotate(3.5deg);
+	background: rgba(205, 230, 255, 0.62);
+	border-color: rgba(100, 155, 220, 0.2);
+}
+.reco-card:nth-child(3n)::before {
+	left: 34%;
+	transform: translateX(-50%) rotate(-2deg);
+	background: rgba(215, 255, 205, 0.58);
+	border-color: rgba(80, 155, 80, 0.2);
+}
+
+/* Scribbled tilts */
+.reco-card:nth-child(1) { transform: rotate(-2deg); }
+.reco-card:nth-child(2) { transform: rotate(1.5deg); }
+.reco-card:nth-child(3) { transform: rotate(-1deg); }
+.reco-card:nth-child(4) { transform: rotate(2deg); }
+.reco-card:nth-child(5) { transform: rotate(-1.5deg); }
+.reco-card:nth-child(6) { transform: rotate(1deg); }
+
+.reco-card:hover {
+	transform: rotate(0deg) translateY(-4px);
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.14), 0 4px 10px rgba(0, 0, 0, 0.08);
+	z-index: 10;
+}
+
+/* Platform strip */
+.reco-platform {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 16px;
+	font-size: 0.75rem;
+	font-weight: 500;
+	color: white;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+	border-radius: 12px 12px 0 0;
+	overflow: hidden;
+}
+
+.reco-card.linkedin .reco-platform { background: #0a66c2; }
+.reco-card.slack .reco-platform { background: #4a154b; }
+
+.platform-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	border-radius: 4px;
+	font-weight: 700;
+	font-size: 0.8rem;
+	background: white;
+	color: #0a66c2;
+	font-family: "Poppins", sans-serif;
+}
+
+.reco-card.slack .platform-icon {
+	color: #4a154b;
+	font-size: 0.9rem;
+}
+
+.platform-label {
+	letter-spacing: 0.3px;
+	opacity: 0.95;
+}
+
+/* LinkedIn card body */
+.reco-card.linkedin .reco-person {
+	display: flex;
+	gap: 12px;
+	padding: 16px 18px 10px;
+}
+
+.reco-avatar {
+	flex-shrink: 0;
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-weight: 600;
+	font-size: 1.1rem;
+	font-family: "Poppins", sans-serif;
+	position: relative;
+	overflow: visible;
+}
+
+/* Hand-drawn scribble circle around each avatar */
+.reco-avatar::after {
+	content: '';
+	position: absolute;
+	inset: -6px;
+	border-radius: 50%;
+	pointer-events: none;
+	z-index: 5;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cpath d='M30,3 C45,2 58,11 58,28 C58,45 46,58 30,57 C14,56 2,44 3,28 C4,13 15,3 30,3 Z' fill='none' stroke='%23ffd700' stroke-width='2.2' stroke-linecap='round' opacity='0.72'/%3E%3C/svg%3E");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.avatar-t::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cpath d='M30,3 C45,2 58,11 58,28 C58,45 46,58 30,57 C14,56 2,44 3,28 C4,13 15,3 30,3 Z' fill='none' stroke='%2393c5fd' stroke-width='2.2' stroke-linecap='round' opacity='0.8'/%3E%3C/svg%3E"); }
+.avatar-vp::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cpath d='M30,3 C45,2 58,11 58,28 C58,45 46,58 30,57 C14,56 2,44 3,28 C4,13 15,3 30,3 Z' fill='none' stroke='%23fb923c' stroke-width='2.2' stroke-linecap='round' opacity='0.8'/%3E%3C/svg%3E"); }
+.avatar-v::after  { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cpath d='M30,3 C45,2 58,11 58,28 C58,45 46,58 30,57 C14,56 2,44 3,28 C4,13 15,3 30,3 Z' fill='none' stroke='%234ade80' stroke-width='2.2' stroke-linecap='round' opacity='0.75'/%3E%3C/svg%3E"); }
+.avatar-n::after  { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cpath d='M30,3 C45,2 58,11 58,28 C58,45 46,58 30,57 C14,56 2,44 3,28 C4,13 15,3 30,3 Z' fill='none' stroke='%2360a5fa' stroke-width='2.2' stroke-linecap='round' opacity='0.8'/%3E%3C/svg%3E"); }
+.avatar-vs::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cpath d='M30,3 C45,2 58,11 58,28 C58,45 46,58 30,57 C14,56 2,44 3,28 C4,13 15,3 30,3 Z' fill='none' stroke='%23f87171' stroke-width='2.2' stroke-linecap='round' opacity='0.8'/%3E%3C/svg%3E"); }
+
+.reco-avatar img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+	z-index: 2;
+	background: inherit;
+}
+
+.avatar-letter {
+	position: relative;
+	z-index: 1;
+}
+
+.avatar-p { background: #e879a5; }
+.avatar-t { background: #6366f1; }
+.avatar-v { background: #10b981; }
+.avatar-vp { background: #f59e0b; }
+.avatar-n { background: #3b82f6; }
+.avatar-vs { background: #ef4444; }
+
+.reco-meta { min-width: 0; flex: 1; }
+
+.reco-name {
+	font-weight: 600;
+	font-size: 0.95rem;
+	color: #0f172a;
+}
+
+.reco-title {
+	font-size: 0.75rem;
+	color: #475569;
+	margin-top: 2px;
+	line-height: 1.3;
+}
+
+.reco-context {
+	font-size: 0.7rem;
+	color: #94a3b8;
+	margin-top: 4px;
+	font-style: italic;
+}
+
+.reco-body {
+	padding: 0 18px 20px;
+	font-size: 0.85rem;
+	color: #334155;
+	line-height: 1.55;
+}
+
+/* Slack card body */
+.slack-message {
+	display: flex;
+	gap: 12px;
+	padding: 16px 18px 18px;
+}
+
+.slack-body {
+	flex: 1;
+	min-width: 0;
+}
+
+.slack-header {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	flex-wrap: wrap;
+	margin-bottom: 6px;
+}
+
+.slack-name {
+	font-weight: 700;
+	color: #0f172a;
+	font-size: 0.95rem;
+}
+
+.slack-role {
+	font-size: 0.7rem;
+	color: #94a3b8;
+	font-weight: 400;
+}
+
+.slack-text {
+	font-size: 0.85rem;
+	color: #334155;
+	line-height: 1.55;
+	margin-bottom: 8px;
+}
+
+.slack-reactions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-top: 8px;
+}
+
+.reaction {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	background: #f1f5f9;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 2px 10px;
+	font-size: 0.75rem;
+	color: #475569;
+	font-weight: 500;
+}
+
+.slack-footnote {
+	margin-top: 10px;
+	font-size: 0.72rem;
+	color: #94a3b8;
+	font-style: italic;
+	border-left: 2px solid #e2e8f0;
+	padding-left: 10px;
+}
+
+@media (max-width: 768px) {
+	.collage-scroll {
+		gap: 24px;
+		padding: 20px 5vw 50px;
+	}
+	.reco-card {
+		width: 300px;
+	}
+	.collage-section h2 {
+		font-size: 1.8rem;
 	}
 }
