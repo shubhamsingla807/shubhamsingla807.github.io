@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dostt · PM Assignment · Shubham Singla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg0:#0c0618;
+    --bg1:#1a0b3d;
+    --bg2:#2a1560;
+    --violet:#8b5cf6;
+    --violet-2:#7c3aed;
+    --teal:#2dd4bf;
+    --gold:#f5c542;
+    --green:#10b981;
+    --ink:#ffffff;
+    --muted:#b9a9e0;
+    --muted-2:#8f7fbf;
+    --card:rgba(139,92,246,0.10);
+    --card-bd:rgba(255,255,255,0.09);
+    --pill:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Poppins',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--bg0);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.brand{font-family:'Fredoka',sans-serif;letter-spacing:.2px}
+
+  /* deck scaffolding */
+  .deck{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+  .deck::-webkit-scrollbar{width:0}
+  section.slide{
+    min-height:100vh;
+    scroll-snap-align:start;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:72px 7vw 88px;
+    position:relative;
+    background:
+      radial-gradient(1100px 600px at 85% -10%, rgba(124,58,237,0.28), transparent 60%),
+      radial-gradient(900px 600px at 0% 110%, rgba(45,212,191,0.12), transparent 55%),
+      linear-gradient(160deg,var(--bg1) 0%, var(--bg0) 70%);
+    border-bottom:1px solid rgba(255,255,255,0.04);
+  }
+  .wrap{max-width:1120px;margin:0 auto;width:100%}
+
+  /* progress + dots */
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--teal),var(--violet));z-index:50;transition:width .15s}
+  .dots{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:11px}
+  .dots a{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.22);transition:all .2s}
+  .dots a.on{background:var(--teal);transform:scale(1.45)}
+  @media(max-width:760px){.dots{display:none}}
+
+  /* brand chip */
+  .logo{display:inline-flex;align-items:center;gap:10px;font-family:'Fredoka';font-weight:700;font-size:26px}
+  .logo .mark{width:34px;height:34px;border-radius:11px 11px 11px 4px;background:#fff;position:relative;display:inline-block}
+  .logo .mark::before{content:"";position:absolute;width:6px;height:6px;border-radius:50%;background:var(--bg0);top:11px;left:9px;box-shadow:10px 0 0 var(--bg0)}
+  .logo .mark::after{content:"";position:absolute;width:12px;height:6px;border-bottom:2.4px solid var(--bg0);border-radius:0 0 8px 8px;left:11px;top:17px}
+
+  .qchip{display:inline-flex;align-items:center;gap:9px;background:rgba(139,92,246,0.18);border:1px solid rgba(139,92,246,0.4);color:#d9ccff;padding:7px 15px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+  .qchip b{color:var(--teal)}
+
+  .kicker{color:var(--teal);font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:12.5px;margin-bottom:14px}
+  h2.title{font-size:clamp(28px,4vw,44px);font-weight:600;line-height:1.1;margin:14px 0 8px}
+  .lead{color:var(--muted);font-size:clamp(15px,1.5vw,18px);max-width:820px;line-height:1.6}
+
+  /* problem box */
+  .problem{margin-top:22px;background:linear-gradient(120deg,rgba(45,212,191,0.10),rgba(139,92,246,0.08));border:1px solid rgba(45,212,191,0.28);border-left:4px solid var(--teal);border-radius:16px;padding:18px 22px}
+  .problem .tag{color:var(--teal);font-weight:600;font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
+  .problem p{color:#e7ddff;margin-top:7px;line-height:1.6;font-size:15.5px}
+  .assume{margin-top:12px;color:var(--muted-2);font-size:13.5px;font-style:normal}
+  .assume b{color:var(--muted)}
+
+  /* card grid */
+  .grid{display:grid;gap:16px;margin-top:26px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--card-bd);border-radius:18px;padding:20px 20px 18px;position:relative;transition:transform .18s,border-color .18s}
+  .card:hover{transform:translateY(-4px);border-color:rgba(139,92,246,0.5)}
+  .card .num{position:absolute;top:-13px;left:20px;width:30px;height:30px;border-radius:9px;background:var(--violet-2);display:flex;align-items:center;justify-content:center;font-family:'Fredoka';font-weight:700;font-size:15px;box-shadow:0 6px 16px rgba(124,58,237,0.5)}
+  .card h3{font-size:17px;font-weight:600;margin:8px 0 10px;line-height:1.3}
+  .card .row{display:flex;gap:9px;margin-top:9px;font-size:13.6px;line-height:1.5}
+  .card .row .lbl{flex:0 0 auto;font-weight:600;padding:1px 9px;border-radius:6px;font-size:11px;letter-spacing:.4px;text-transform:uppercase;height:fit-content;margin-top:1px}
+  .lbl.exp{background:rgba(45,212,191,0.16);color:var(--teal)}
+  .lbl.risk{background:rgba(245,120,120,0.16);color:#ff9d9d}
+  .lbl.why{background:rgba(245,197,66,0.16);color:var(--gold)}
+  .card .row span{color:var(--muted);flex:1}
+
+  /* metric strip */
+  .metric{margin-top:22px;display:flex;align-items:center;gap:16px;background:rgba(245,197,66,0.08);border:1px solid rgba(245,197,66,0.28);border-radius:14px;padding:15px 20px}
+  .metric .coin{width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe08a,var(--gold));flex:0 0 auto;box-shadow:0 4px 12px rgba(245,197,66,0.4)}
+  .metric p{font-size:14.5px;color:#f4ecc9;line-height:1.5}
+  .metric b{color:#fff}
+
+  /* ladder */
+  .ladder{margin-top:24px;display:grid;gap:12px}
+  .step{display:flex;align-items:flex-start;gap:16px;background:var(--card);border:1px solid var(--card-bd);border-radius:14px;padding:16px 20px}
+  .step .rank{font-family:'Fredoka';font-weight:700;font-size:20px;color:var(--teal);flex:0 0 34px}
+  .step h4{font-size:15.5px;font-weight:600;margin-bottom:4px}
+  .step p{color:var(--muted);font-size:13.8px;line-height:1.55}
+
+  /* signals row */
+  .signals{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:900px){.signals{grid-template-columns:1fr}}
+  .sig{background:rgba(245,120,120,0.07);border:1px solid rgba(245,120,120,0.22);border-radius:14px;padding:16px 18px}
+  .sig .dn{color:#ff9d9d;font-weight:600;font-size:13px;letter-spacing:.5px}
+  .sig p{color:var(--muted);font-size:13.6px;margin-top:6px;line-height:1.5}
+
+  ul.bullets{margin-top:14px;list-style:none;display:grid;gap:9px}
+  ul.bullets li{padding-left:22px;position:relative;color:var(--muted);font-size:15px;line-height:1.55}
+  ul.bullets li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:50%;background:var(--teal)}
+  ul.bullets li b{color:#fff;font-weight:600}
+
+  .note{margin-top:18px;color:var(--muted-2);font-size:13.5px;border-left:3px solid rgba(139,92,246,0.5);padding-left:14px;line-height:1.55}
+
+  /* cover */
+  .cover .logo{margin-bottom:34px}
+  .cover h1{font-size:clamp(34px,6vw,64px);font-weight:600;line-height:1.05;margin-bottom:18px}
+  .cover h1 span{color:var(--teal)}
+  .cover .sub{color:var(--muted);font-size:clamp(15px,1.8vw,19px);max-width:640px;line-height:1.6}
+  .who{margin-top:38px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .who .pill{background:var(--pill);color:#1a0b3d;font-weight:600;padding:9px 20px;border-radius:999px;font-size:14px}
+  .who .ghost{border:1px solid rgba(255,255,255,0.25);color:#fff;padding:9px 18px;border-radius:999px;font-size:14px;text-decoration:none}
+  .who .ghost:hover{border-color:var(--teal);color:var(--teal)}
+  .scrollhint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);color:var(--muted-2);font-size:12.5px;letter-spacing:1px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .scrollhint .mouse{width:22px;height:34px;border:2px solid var(--muted-2);border-radius:12px;position:relative}
+  .scrollhint .mouse::before{content:"";position:absolute;width:3px;height:6px;background:var(--muted-2);left:50%;transform:translateX(-50%);top:6px;border-radius:2px;animation:sc 1.5s infinite}
+  @keyframes sc{0%{opacity:0;top:6px}40%{opacity:1}100%{opacity:0;top:16px}}
+
+  /* floating deco */
+  .deco{position:absolute;border-radius:50%;filter:blur(1px);opacity:.5;pointer-events:none}
+  .c-teal{background:radial-gradient(circle at 35% 30%,#7ff0e0,var(--teal))}
+  .c-gold{background:radial-gradient(circle at 35% 30%,#ffe08a,var(--gold))}
+
+  .glance{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+  @media(max-width:900px){.glance{grid-template-columns:1fr}}
+  .fact{background:var(--card);border:1px solid var(--card-bd);border-radius:16px;padding:18px}
+  .fact .big{font-family:'Fredoka';font-weight:700;font-size:22px;color:var(--teal);margin-bottom:5px}
+  .fact p{color:var(--muted);font-size:13.8px;line-height:1.5}
+
+  .foot{margin-top:26px;color:var(--muted-2);font-size:12.5px}
+  .approach{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  @media(max-width:900px){.approach{grid-template-columns:1fr}}
+  .ap{background:var(--card);border:1px solid var(--card-bd);border-radius:16px;padding:20px}
+  .ap .st{font-family:'Fredoka';font-weight:700;color:var(--violet);font-size:15px;margin-bottom:8px}
+  .ap h4{font-size:16px;margin-bottom:7px}
+  .ap p{color:var(--muted);font-size:13.8px;line-height:1.55}
+
+  .close-line{margin-top:26px;display:grid;gap:14px}
+  .cl{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--card-bd);border-radius:14px;padding:16px 20px}
+  .cl .q{font-family:'Fredoka';font-weight:700;color:var(--teal);flex:0 0 46px;font-size:15px}
+  .cl p{color:var(--muted);font-size:14.5px;line-height:1.5}
+  .cl p b{color:#fff}
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+<nav class="dots" id="dots"></nav>
+
+<div class="deck" id="deck">
+
+  <!-- 1. COVER -->
+  <section class="slide cover">
+    <span class="deco c-teal" style="width:120px;height:120px;top:16%;right:14%"></span>
+    <span class="deco c-gold" style="width:60px;height:60px;top:30%;right:26%"></span>
+    <span class="deco c-teal" style="width:40px;height:40px;bottom:22%;left:12%"></span>
+    <div class="wrap">
+      <div class="logo"><span class="mark"></span>dostt</div>
+      <h1>Product Manager<br>Assignment · <span>Dostt</span></h1>
+      <p class="sub">Four product problems, worked from the actual app. Activation, feature signals, scale, and retention.</p>
+      <div class="who">
+        <span class="pill">Shubham Singla</span>
+        <span class="ghost">Growth PM</span>
+        <a class="ghost" href="https://shubhamsingla807.github.io/about.html" target="_blank" rel="noopener">Portfolio ↗</a>
+      </div>
+    </div>
+    <div class="scrollhint"><div class="mouse"></div>scroll</div>
+  </section>
+
+  <!-- 2. APPROACH -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="kicker">How I worked this</div>
+      <h2 class="title">Used the app first, then answered</h2>
+      <p class="lead">No blind frameworks. I installed Dostt, mapped the real model, and led every answer with the problem before the solution.</p>
+      <div class="approach">
+        <div class="ap"><div class="st">01</div><h4>Walked the flow</h4><p>Login to first call, coin sheet, profiles, Dia, spin wheel. The friction points came from what I actually saw.</p></div>
+        <div class="ap"><div class="st">02</div><h4>Read the model honestly</h4><p>A paid anonymous calling marketplace wearing an emotional-wellness pitch. The useful answers live in that gap.</p></div>
+        <div class="ap"><div class="st">03</div><h4>Problem before solution</h4><p>Each question states what is really happening in Dostt, the assumptions, then the answer and how I would measure it.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. APP IN ONE GLANCE -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="kicker">Context</div>
+      <h2 class="title">Dostt in one glance</h2>
+      <p class="lead">What a new user meets, and the economy running underneath it.</p>
+      <div class="glance">
+        <div class="fact"><div class="big">₹ before hello</div><p>Land with 0 coins and a purchase sheet is the first screen. You pay before talking to anyone.</p></div>
+        <div class="fact"><div class="big">10 : 1</div><p>10 coins = 1 diamond. Audio costs 1 diamond a minute, video 6. Coins run out fast.</p></div>
+        <div class="fact"><div class="big">Real, but cartoon</div><p>Listeners are real people shown as AI cartoon avatars with interest tags. Looks uncertain to a first-timer.</p></div>
+        <div class="fact"><div class="big">Dia</div><p>A free AI chatbot. Useful, but limited, and not a real human conversation.</p></div>
+        <div class="fact"><div class="big">Spin wheel</div><p>Occasional free coins. One spin can fund roughly a single free minute.</p></div>
+        <div class="fact"><div class="big">Random call</div><p>One tap to connect with anyone, same pricing as picking a profile.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Q1 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="qchip"><b>Q1</b> · User Activation</div>
+      <h2 class="title">40% install and never start a conversation</h2>
+      <div class="problem">
+        <span class="tag">The real problem</span>
+        <p>A new user lands with 0 coins and the first thing pushed is a coin purchase. They are asked to pay before talking to anyone, and before they even know what coins are for. The cartoon avatars make a "talk to someone real" pitch feel fake. The drop-off sits at a wall that costs money and looks uncertain, not a failure to understand the value.</p>
+        <p class="assume"><b>Assumption:</b> installs come from wellness or friendship ads, users arrive curious but low-intent, and expect to try before paying.</p>
+      </div>
+      <div class="grid g4">
+        <div class="card"><div class="num">H1</div><h3>The upfront coin wall blocks the first call</h3>
+          <div class="row"><span class="lbl exp">Test</span><span>Give some % of new installs 15 free coins on signup, keep the rest as is, compare first-conversation rate in 48h.</span></div>
+          <div class="row"><span class="lbl risk">Risk</span><span>Activation gets bought with free minutes, hurting margins and pulling in freeloaders who never top up.</span></div>
+        </div>
+        <div class="card"><div class="num">H2</div><h3>AI cartoon avatars break trust</h3>
+          <div class="row"><span class="lbl exp">Test</span><span>A/B the profile card with trust signals (online now, "320 calls taken", short real voice clip) vs the cartoon card. Measure tap-to-call.</span></div>
+          <div class="row"><span class="lbl risk">Risk</span><span>The credibility problem is catalog-wide, and fixing it may clash with anonymity or expose weak profiles.</span></div>
+        </div>
+        <div class="card"><div class="num">H3</div><h3>A cold voice call is too big a first step</h3>
+          <div class="row"><span class="lbl exp">Test</span><span>Give a cohort free text-chat with a real listener before calling, compare activation against call-first.</span></div>
+          <div class="row"><span class="lbl risk">Risk</span><span>A text tier monetises worse than calls and could cannibalise paid minutes.</span></div>
+        </div>
+        <div class="card"><div class="num">H4</div><h3>We never capture why they came</h3>
+          <div class="row"><span class="lbl exp">Test</span><span>Add a one-tap intent question in onboarding (lonely, vent, curious, advice), reorder home to match, compare first-conversation rate.</span></div>
+          <div class="row"><span class="lbl risk">Risk</span><span>Matching is only as good as supply. Thin supply for a chosen intent makes the empty state worse.</span></div>
+        </div>
+      </div>
+      <div class="metric"><div class="coin"></div><p><b>How I'd read it:</b> one metric across all four, the percent of new installs who finish a first real conversation within 48 hours. Whichever lever moves it most is the real leak.</p></div>
+    </div>
+  </section>
+
+  <!-- 5. Q2 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="qchip"><b>Q2</b> · Feature Success Metrics</div>
+      <h2 class="title">Leading indicators for Random Calling</h2>
+      <div class="problem">
+        <span class="tag">The real problem</span>
+        <p>Random Calling exists to remove the "who do I even call" decision. One tap and you are connected. So the leading signals should measure whether that shortcut gets people into good conversations faster, well before any top-up. I leave out "% who pick random", because profiles own the screen and pull the clicks, so it always reads low and looks like a false negative.</p>
+        <p class="assume"><b>Assumption:</b> listener quality is roughly even on both paths, so we measure the feature and not a lucky or unlucky voice.</p>
+      </div>
+      <div class="grid g3">
+        <div class="card"><div class="num">1</div><h3>Time to first connect</h3>
+          <div class="row"><span class="lbl why">Read</span><span>Random-available cohort vs not. If random shrinks the median time from opening the app to being in a live call, it is doing its core job.</span></div>
+        </div>
+        <div class="card"><div class="num">2</div><h3>Connection quality</h3>
+          <div class="row"><span class="lbl why">Read</span><span>Share of random taps that reach a live listener, together with the share of those calls lasting past 2-3 minutes. Speed plus staying power.</span></div>
+        </div>
+        <div class="card"><div class="num">3</div><h3>Time to value</h3>
+          <div class="row"><span class="lbl why">Read</span><span>Random-first vs profile-first users, how quickly each starts a second call. Faster second call means value delivered early.</span></div>
+        </div>
+      </div>
+      <p class="note"><b>Held for later:</b> share of calls that are random vs specific. It reads low no matter what, so I would only grow it on purpose once Indicator 3 proves random users come back faster.</p>
+    </div>
+  </section>
+
+  <!-- 6. Q3 failures -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="qchip"><b>Q3</b> · Scalability</div>
+      <h2 class="title">Concurrent calls double overnight</h2>
+      <div class="problem">
+        <span class="tag">The real problem</span>
+        <p>A caller-side demand spike from a festival or the 80% off offer. Listener supply cannot double by morning, and every failure below flows from that gap.</p>
+        <p class="assume"><b>Assumption:</b> listeners online stay roughly flat while caller demand doubles.</p>
+      </div>
+      <div class="grid g4">
+        <div class="card"><h3>Supply runs dry</h3><div class="row"><span class="lbl risk">Fail</span><span>Callers tap and no one is free. Failed connects, dead home screen. Liquidity is the whole product, so this hurts most.</span></div></div>
+        <div class="card"><h3>The economy leaks</h3><div class="row"><span class="lbl risk">Fail</span><span>An 80% off sale sells minutes cheap while listeners still earn full rupees a minute. Bigger losses, plus bargain hunters who never top up.</span></div></div>
+        <div class="card"><h3>Broken first run for new users</h3><div class="row"><span class="lbl risk">Fail</span><span>Festival installs hit the Q1 wall, amplified. A bigger inflow also brings bad actors pushing NSFW calls, souring it for listeners who then quit.</span></div></div>
+        <div class="card"><h3>Safety load spikes</h3><div class="row"><span class="lbl risk">Fail</span><span>Double the calls, double the reports, but moderation is human. Female listeners get flooded and some go offline, shrinking supply further.</span></div></div>
+      </div>
+      <div class="signals">
+        <div class="sig"><div class="dn">↓ NPS / ratings</div><p>A surge of 1-star Play Store reviews or a rising uninstall rate.</p></div>
+        <div class="sig"><div class="dn">↓ Second-call initiation</div><p>Ties straight to fewer wallet top-ups.</p></div>
+        <div class="sig"><div class="dn">↓ Minutes per call</div><p>Volume doubled, but that says nothing about quality.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Q3 prioritize -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="qchip"><b>Q3</b> · Prioritize & Address</div>
+      <h2 class="title">Fix what loses money or users for good, first</h2>
+      <div class="ladder">
+        <div class="step"><div class="rank">1</div><div><h4>Protect the connection</h4><p>Surge payouts to pull listeners online, notify offline ones, pre-schedule supply if the festival is known ahead. If demand still overshoots, throttle with a queue and a wait estimate so calls stop failing silently.</p></div></div>
+        <div class="step"><div class="rank">2</div><div><h4>Protect the money</h4><p>Cap discounted coins per user, block stacking the offer with spin-wheel freebies, and watch a live payout-to-revenue ratio.</p></div></div>
+        <div class="step"><div class="rank">3</div><div><h4>Protect the new-user wave</h4><p>Give the festival cohort one genuinely free first call and route scarce listeners to first-timers, so the spike does not burn the users the ads just paid for.</p></div></div>
+        <div class="step"><div class="rank">4</div><div><h4>Protect trust</h4><p>Tighter rate limits, faster auto-flagging, and a clear report path so listeners feel safe enough to stay online.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Q4 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="qchip"><b>Q4</b> · Retention Loop</div>
+      <h2 class="title">3 calls done, silent for 7 days</h2>
+      <div class="problem">
+        <span class="tag">The real problem</span>
+        <p>Waiting for 7 days of silence is already too late. By then some users have uninstalled, and once the app is gone no nudge reaches them and re-installs almost never happen. The real work is catching the churn while they are still installed and warm, so I replace the fixed trigger with an early-warning signal from behaviour.</p>
+        <p class="assume"><b>Assumption:</b> these users came for an emotional reason, so the pull back should be human, and the drop-off is either about money or about not feeling the value yet.</p>
+      </div>
+      <ul class="bullets">
+        <li><b>Predict the churn before it happens.</b> Build a risk signal from patterns, not a calendar: falling call frequency, shorter calls, calls dropped mid-way, opening the app without calling, spin-only sessions, coins at zero with no top-up. Act while they are still on the app.</li>
+        <li><b>Fix the real reason they stopped.</b> Money or a value that never clicked. One move covers both, a free 2-minute call with the best-matched listener. Removes the cost barrier and buys another shot at the value.</li>
+        <li><b>Guide the next connection.</b> Don't drop an at-risk user onto a generic home. Point them to who to talk to next based on history and interests.</li>
+        <li><b>Nudge journey built on psychology.</b> One adaptive journey, not timed copies. Lead hook is a personal follow-up from their last listener referencing the real chat they had. If ignored, shift levers from the familiar person, to the unmet need, to a low-friction free minute.</li>
+        <li><b>Chat as the soft re-entry.</b> A cooling-off user won't jump into a paid voice call. Let the follow-up land as a free chat they can reply to, warm up, then move to a call.</li>
+      </ul>
+      <p class="note"><b>Measure:</b> does the churn model catch at-risk users before they go dormant, does the intervention lift return rate vs a holdout, and how many free 2-minute calls convert into a 4th paid call.</p>
+    </div>
+  </section>
+
+  <!-- 9. THANKS -->
+  <section class="slide">
+    <span class="deco c-teal" style="width:110px;height:110px;top:18%;right:15%"></span>
+    <span class="deco c-gold" style="width:54px;height:54px;bottom:24%;left:13%"></span>
+    <div class="wrap">
+      <div class="kicker">That's a wrap</div>
+      <h2 class="title">Thanks for going through it</h2>
+      <p class="lead">I used my own framework here, thinking the problem first and only then forming the hypotheses. The judgement and calls are mine.</p>
+      <div class="close-line">
+        <div class="cl"><div class="q">↳</div><p>Claude helped me <b>build this website</b> and tighten the wording where needed.</p></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const slides = [...document.querySelectorAll('.slide')];
+  const prog = document.getElementById('prog');
+  const dots = document.getElementById('dots');
+
+  slides.forEach((s,i)=>{
+    const a=document.createElement('a');
+    a.href='#';
+    a.addEventListener('click',e=>{e.preventDefault();s.scrollIntoView({behavior:'smooth'})});
+    dots.appendChild(a);
+  });
+  const dotEls=[...dots.children];
+
+  function onScroll(){
+    const st=deck.scrollTop, h=deck.scrollHeight-deck.clientHeight;
+    prog.style.width=(st/h*100)+'%';
+    let idx=Math.round(st/deck.clientHeight);
+    idx=Math.max(0,Math.min(slides.length-1,idx));
+    dotEls.forEach((d,i)=>d.classList.toggle('on',i===idx));
+  }
+  deck.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+
+  document.addEventListener('keydown',e=>{
+    const cur=Math.round(deck.scrollTop/deck.clientHeight);
+    if(e.key==='ArrowDown'||e.key==='PageDown'){e.preventDefault();slides[Math.min(slides.length-1,cur+1)].scrollIntoView({behavior:'smooth'})}
+    if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();slides[Math.max(0,cur-1)].scrollIntoView({behavior:'smooth'})}
+  });
+</script>
+</body>
+</html>
