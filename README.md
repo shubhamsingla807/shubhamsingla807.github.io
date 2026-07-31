@@ -1,16 +1,15 @@
-### Hi there, I'm Shubham Singla. I'm a Product Manager currently working at Justdial. I love talking to users & reading books a lot 👋
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
-<!--
-**shubhamsingla807/shubhamsingla807** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+### Hi, I'm Shubham Singla 👋
 
-Here are some ideas to get you started:
+Product Manager at **STAGE**, working on retention, payments, and re-engagement for Tier 2/3 India. Previously drove mWeb growth at **Justdial** (2.4M DAU) and interned at **Scaler** and **PowerPlay**.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+I write production code, run experiments faster than my dashboards can emotionally process, and treat AI as my favourite teammate.
+
+🔗 **Portfolio:** https://shubhamsingla807.github.io/
+🗣️ **What people say about me:** https://shubhamsingla807.github.io/about.html#recommendations
+
+**Ask me about:** experimentation, monetization, retention, and shipping without waiting for eng bandwidth.
+
+### Find me
+- Portfolio → https://shubhamsingla807.github.io/
+- LinkedIn → https://www.linkedin.com/in/shubhamsingla/
+- Medium → https://medium.com/@shubhamsingla807
