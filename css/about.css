@@ -974,3 +974,18 @@ footer ul li:nth-child(3) a:before {
 	.gh-rule { margin: 14px 0 22px; }
 	.gh-card { padding: 16px; }
 }
+
+.gh-copy {
+	max-width: 720px;
+	margin: 0 0 14px;
+	color: #334155;
+	font-size: 1.05rem;
+	line-height: 1.7;
+}
+.gh-copy em {
+	color: #0f172a;
+	font-style: italic;
+}
+@media (max-width: 800px) {
+	.gh-copy { font-size: 1rem; }
+}
