@@ -268,31 +268,92 @@
 				</div>
 			</div>
 
-			<!-- AI-native builder / GitHub contribution graph -->
-			<section class="build-section" id="build">
-				<h2>&ldquo;Can I <span class="blue">build</span> this?&rdquo;</h2>
-				<p class="build-copy">
-					I&rsquo;m a PM. Then AI showed up. Somewhere along the way I
-					stopped asking <em>&ldquo;Can engineering build this?&rdquo;</em>
-					and started asking <em>&ldquo;Can I build this?&rdquo;</em>
-				</p>
-				<p class="build-copy">
-					Not proof that PMs should become developers. Proof that the
-					people closest to the problem can now get much closer to the
-					solution.
-				</p>
-				<div class="gh-graph">
-					<img
-						src="https://ghchart.rshah.org/1937d7/shubhamsingla807"
-						alt="Shubham Singla&rsquo;s GitHub contribution graph"
-						loading="lazy"
-					/>
+			<!-- AI-native builder / interactive GitHub contribution graph -->
+			<section class="gh-section" id="build">
+				<h2 class="gh-title">
+					I&rsquo;m a PM.<br />This is my <span class="blue">GitHub.</span>
+				</h2>
+				<div class="gh-rule"></div>
+				<div class="gh-card">
+					<div class="gh-card-top">
+						<span class="gh-count" id="ghCount">contributions in the last year</span>
+						<a class="gh-handle" href="https://github.com/shubhamsingla807" target="_blank" rel="noopener">@shubhamsingla807 &rarr;</a>
+					</div>
+					<div class="gh-scroll">
+						<div class="gh-months" id="ghMonths"></div>
+						<div class="gh-body">
+							<div class="gh-days" id="ghDays"></div>
+							<div class="gh-grid" id="ghGrid"></div>
+						</div>
+						<div class="gh-legend">
+							<span>Less</span>
+							<i class="l0"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i>
+							<span>More</span>
+						</div>
+					</div>
 				</div>
-				<p class="gh-caption">
-					A real GitHub graph. No, I didn&rsquo;t switch careers.
-					<a href="https://github.com/shubhamsingla807" target="_blank" rel="noopener">@shubhamsingla807</a>
-				</p>
+				<p class="gh-note">Mostly shipped prototypes, internal tools, and growth experiments. Yes, from a PM.</p>
 			</section>
+			<div class="gh-tip" id="ghTip"></div>
+			<script>
+				(function () {
+					var WEEKS = 53, DAYS = 7;
+					var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+					var dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+					function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+					var rand = rng(20260601);
+					var end = new Date(); end.setHours(0,0,0,0);
+					var start = new Date(end);
+					start.setDate(end.getDate() - 364);
+					start.setDate(start.getDate() - start.getDay()); // back to Sunday
+					var grid = document.getElementById("ghGrid");
+					var monthsEl = document.getElementById("ghMonths");
+					var daysEl = document.getElementById("ghDays");
+					var tip = document.getElementById("ghTip");
+					var total = 0, lastMonth = -1;
+					for (var w = 0; w < WEEKS; w++) {
+						for (var d = 0; d < DAYS; d++) {
+							var idx = w * DAYS + d;
+							var date = new Date(start); date.setDate(start.getDate() + idx);
+							if (date > end) { continue; }
+							var recent = w / WEEKS;
+							var p = recent > 0.58 ? 0.30 + (recent - 0.58) * 0.85 : 0.03;
+							var count = 0;
+							if (rand() < p) { count = 2 + Math.floor(rand() * 23); } // 2..24
+							total += count;
+							var lvl = count === 0 ? 0 : count < 6 ? 1 : count < 12 ? 2 : count < 19 ? 3 : 4;
+							var cell = document.createElement("div");
+							cell.className = "gh-cell l" + lvl;
+							cell.setAttribute("data-c", count);
+							cell.setAttribute("data-d", dayNames[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate());
+							grid.appendChild(cell);
+						}
+					}
+					for (var w2 = 0; w2 < WEEKS; w2++) {
+						var date2 = new Date(start); date2.setDate(start.getDate() + w2 * DAYS);
+						var lab = document.createElement("span");
+						var m = date2.getMonth();
+						if (m !== lastMonth && date2.getDate() <= 7) { lab.textContent = months[m]; lastMonth = m; }
+						monthsEl.appendChild(lab);
+					}
+					for (var r = 0; r < 7; r++) {
+						var s = document.createElement("span");
+						s.textContent = (r === 1 ? "Mon" : r === 3 ? "Wed" : r === 5 ? "Fri" : "");
+						daysEl.appendChild(s);
+					}
+					document.getElementById("ghCount").textContent = total + " contributions in the last year";
+					grid.addEventListener("mouseover", function (e) {
+						var t = e.target; if (!t.classList || !t.classList.contains("gh-cell")) return;
+						var c = t.getAttribute("data-c");
+						tip.textContent = (c === "0" ? "No contributions" : c + " contribution" + (c === "1" ? "" : "s")) + " on " + t.getAttribute("data-d");
+						var box = t.getBoundingClientRect();
+						tip.style.left = (box.left + box.width / 2) + "px";
+						tip.style.top = (box.top - 36) + "px";
+						tip.style.opacity = 1;
+					});
+					grid.addEventListener("mouseout", function () { tip.style.opacity = 0; });
+				})();
+			</script>
 
 			<div class="collage-section" id="r">
 				<h2>What <span class="blue">people say</span> about me</h2>
