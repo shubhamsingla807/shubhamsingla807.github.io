@@ -316,12 +316,16 @@
 							var idx = w * DAYS + d;
 							var date = new Date(start); date.setDate(start.getDate() + idx);
 							if (date > end) { continue; }
-							var recent = w / WEEKS;
-							var p = recent > 0.58 ? 0.30 + (recent - 0.58) * 0.85 : 0.03;
+							var p = w < 30 ? 0.03 : 0.16 + ((w - 30) / (WEEKS - 30)) * 0.24;
 							var count = 0;
-							if (rand() < p) { count = 2 + Math.floor(rand() * 23); } // 2..24
+							if (rand() < p) {
+								var x = rand();
+								count = x < 0.6 ? 1 + Math.floor(rand() * 3)
+									: x < 0.87 ? 4 + Math.floor(rand() * 5)
+									: 9 + Math.floor(rand() * 16); // up to 24
+							}
 							total += count;
-							var lvl = count === 0 ? 0 : count < 6 ? 1 : count < 12 ? 2 : count < 19 ? 3 : 4;
+							var lvl = count === 0 ? 0 : count < 4 ? 1 : count < 8 ? 2 : count < 15 ? 3 : 4;
 							var cell = document.createElement("div");
 							cell.className = "gh-cell l" + lvl;
 							cell.setAttribute("data-c", count);
