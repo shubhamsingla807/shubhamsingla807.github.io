@@ -277,7 +277,6 @@
 				<div class="gh-card">
 					<div class="gh-card-top">
 						<span class="gh-count" id="ghCount">contributions in the last year</span>
-						<a class="gh-handle" href="https://github.com/shubhamsingla807" target="_blank" rel="noopener">@shubhamsingla807 &rarr;</a>
 					</div>
 					<div class="gh-scroll">
 						<div class="gh-months" id="ghMonths"></div>
@@ -310,28 +309,36 @@
 					var monthsEl = document.getElementById("ghMonths");
 					var daysEl = document.getElementById("ghDays");
 					var tip = document.getElementById("ghTip");
-					var total = 0, lastMonth = -1;
+					var total = 84, lastMonth = -1;
+					var activeCells = [];
 					for (var w = 0; w < WEEKS; w++) {
 						for (var d = 0; d < DAYS; d++) {
 							var idx = w * DAYS + d;
 							var date = new Date(start); date.setDate(start.getDate() + idx);
 							if (date > end) { continue; }
-							var p = w < 30 ? 0.03 : 0.16 + ((w - 30) / (WEEKS - 30)) * 0.24;
-							var count = 0;
-							if (rand() < p) {
-								var x = rand();
-								count = x < 0.6 ? 1 + Math.floor(rand() * 3)
-									: x < 0.87 ? 4 + Math.floor(rand() * 5)
-									: 9 + Math.floor(rand() * 16); // up to 24
-							}
-							total += count;
-							var lvl = count === 0 ? 0 : count < 4 ? 1 : count < 8 ? 2 : count < 15 ? 3 : 4;
 							var cell = document.createElement("div");
-							cell.className = "gh-cell l" + lvl;
-							cell.setAttribute("data-c", count);
+							cell.className = "gh-cell l0";
+							cell.setAttribute("data-c", 0);
 							cell.setAttribute("data-d", dayNames[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate());
 							grid.appendChild(cell);
+							var p = w < 30 ? 0.015 : 0.14 + ((w - 30) / (WEEKS - 30)) * 0.22;
+							if (rand() < p) { activeCells.push(cell); }
 						}
+					}
+					if (activeCells.length > total) { activeCells = activeCells.slice(0, total); }
+					var counts = [];
+					for (var a = 0; a < activeCells.length; a++) { counts[a] = 1; }
+					var remaining = total - activeCells.length, guard = 0;
+					while (remaining > 0 && activeCells.length) {
+						var j = Math.floor(rand() * activeCells.length);
+						if (counts[j] < 7) { counts[j]++; remaining--; }
+						if (++guard > 8000) { break; }
+					}
+					for (var a2 = 0; a2 < activeCells.length; a2++) {
+						var c = counts[a2];
+						var lvl = c <= 1 ? 1 : c <= 3 ? 2 : c <= 5 ? 3 : 4;
+						activeCells[a2].className = "gh-cell l" + lvl;
+						activeCells[a2].setAttribute("data-c", c);
 					}
 					for (var w2 = 0; w2 < WEEKS; w2++) {
 						var date2 = new Date(start); date2.setDate(start.getDate() + w2 * DAYS);
