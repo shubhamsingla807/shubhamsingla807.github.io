@@ -825,3 +825,67 @@ footer ul li:nth-child(3) a:before {
 		font-size: 0.82rem;
 	}
 }
+
+/* ==========================================
+   AI-native builder / GitHub contribution graph
+   ========================================== */
+.build-section {
+	padding: 70px 8vw 20px;
+	text-align: center;
+	max-width: 1100px;
+	margin: 0 auto;
+}
+.build-section h2 {
+	font-size: 2.4rem;
+	font-weight: 400;
+	margin-bottom: 22px;
+}
+.build-copy {
+	max-width: 720px;
+	margin: 0 auto 14px;
+	color: #334155;
+	font-size: 1.05rem;
+	line-height: 1.7;
+}
+.build-copy em {
+	color: #0f172a;
+	font-style: italic;
+}
+.gh-graph {
+	margin: 34px auto 14px;
+	max-width: 840px;
+	background: #fff;
+	border: 1px solid #e5e7f0;
+	border-radius: 14px;
+	padding: 22px;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+	overflow-x: auto;
+}
+.gh-graph img {
+	width: 100%;
+	min-width: 620px;
+	display: block;
+}
+.gh-caption {
+	color: #94a3b8;
+	font-size: 0.9rem;
+}
+.gh-caption a {
+	color: #1937d7;
+	text-decoration: none;
+	font-weight: 600;
+}
+@media (max-width: 800px) {
+	.build-section {
+		padding: 40px 5vw 10px;
+	}
+	.build-section h2 {
+		font-size: 1.8rem;
+	}
+	.build-copy {
+		font-size: 1rem;
+	}
+	.gh-graph {
+		padding: 14px;
+	}
+}
